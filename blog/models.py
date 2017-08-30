@@ -1,5 +1,7 @@
+from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
+
 
 class Post(models.Model):
 	author = models.ForeignKey('auth.User')
@@ -16,3 +18,12 @@ class Post(models.Model):
 
 	def __str__(self):
 		return self.title
+		
+
+class Result(models.Model):
+    sentiment = models.TextField(max_length=250)
+    classification = models.CharField(max_length=10)
+
+class Tweet(models.Model):
+    created_date = models.CharField(max_length=20, null=True)
+    tweet_text = models.TextField(max_length=250)

@@ -69,7 +69,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'klasifikasi.wsgi.application'
-
+ADMIN_SITE_HEADER = "Sentiment Analysis Login"
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases

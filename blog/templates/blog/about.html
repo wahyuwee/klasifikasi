@@ -1,0 +1,69 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+
+ <html>
+    <head>
+        <title>Klasifikasi</title>
+    </head>
+    <body>
+        {% block content %}
+ <!-- 
+        ================================================== 
+            Global Page Section Start
+        ================================================== -->
+        <section class="global-page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <h2>About</h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <a href="{% url 'home' %}">
+                                        <i class="ion-ios-home"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="active">About</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+        ================================================== 
+            Company Description Section Start
+        ================================================== -->
+        <section class="company-description">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 wow fadeInLeft" data-wow-delay=".3s" >
+                        <img src="{%static 'images/test.png' %}" alt="" class="img-responsive">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="block" style="text-align: justify;">
+                            <h3 class="subtitle wow fadeInUp" data-wow-delay=".3s" data-wow-duration="500ms">SENTWEETS!: GO-JEK ANALYZER</h3>
+                            <p  class="wow fadeInUp" data-wow-delay=".5s" data-wow-duration="500ms">
+                                Banyak tweets di Twitter mengenai layanan GO-JEK, tweets yang dikirimkan masyarakat atau pengguna Twitter ini mengandung sentimen. Di Twitter sentimen bisa dijadikan alat ukur untuk mengetahui seberapa berpengaruh suatu obyek baik pengaruh positif, maupun pengaruh negatif. Dengan banyaknya tweets yang masuk perlu diterapkannya metode analisa salah satunya dalam bentuk aplikasi ini. 
+                            </p>
+                            <p  class="wow fadeInUp" data-wow-delay=".7s" data-wow-duration="500ms">
+                                Aplikasi ini berfungsi untuk menganalisa tweet-tweet tentang layanan GO-JEK. Tweet yang dianalisa akan diklasifikasi kedalam sentimen tweet positif atau negatif yang disajikan dalam bentuk tabel dan diagram. Aplikasi ini merupakan penerapan dari Teks Mining yang dibuat dengan bahasa pemrograman Python dan Django Framework serta menggunakan Naïve Bayes sebagai metodenya. Diharapkan aplikasi ini dapat menjadi informasi yang dibutuhkan untuk memperbaiki dan meningkatkan layanan GO-JEK. <br><br>
+                                Salam, <br>
+                            </p><br>
+                            <p  class="wow fadeInUp" data-wow-delay=".8s" data-wow-duration="500ms">
+                                Wahyu Purwoko Utomo <br>
+                                19113205 <br>
+                                Sistem Informasi ‘13 <br>
+                                Universitas Gunadarma <br>
+                                wahyu.wpu@gmail.com <br>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endblock %}
+    </body>
+</html>
