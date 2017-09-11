@@ -19,7 +19,6 @@ class Post(models.Model):
 	def __str__(self):
 		return self.title
 		
-
 class Result(models.Model):
     sentiment = models.TextField(max_length=250)
     classification = models.CharField(max_length=10)

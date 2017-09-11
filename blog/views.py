@@ -178,7 +178,7 @@ def get_tweets(request):
                             classify_result = 'Netral'
                             net_count += 1
 
-                        sentiment2 = Result(sentiment=text, classification=classify_result)
+                        sentiment2 = Result(sentiment=text.lower(), classification=classify_result)
                         sentiment2.save()
 
                 tweetCount += len(new_tweets)

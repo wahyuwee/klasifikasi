@@ -35,14 +35,20 @@
         </style>
 
     <!-- jquery -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
-        <script src="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css"></script>
-        <script src="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.4.1/css/buttons.dataTables.min.css">
+        <!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css"> -->
+        <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css"> -->
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
-        <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <!-- <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script> -->
+        <!-- <script src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script> -->
+        <!-- <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script> -->
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.print.min.js"></script>
+
+        
     </head>
     <body>
         {% block content %}
@@ -74,14 +80,105 @@
         <div class="vertical-center sun">
             <div class="container">
                 <div class="row">
-                    <div class="action">
-                        <div class="col-sm-12">
-                            <h3>Cara Kerja Analisis Sentimen:<br>
-•   Klik Button Crawling and Classify Tweet<br>
-•   Sistem akan melakukan Crawling dan otomatis mengklasifisikasikan tweet hasil crawling kedalam sentimen.<br>
-•   Waktu Crawling kira-kira 3 sampai 5 menit. Harap bersabar.<br>
-•   Hasil dari Klasifikasi akan ditampilkan pada tabel dibawah beserta diagram pie-nya.<br>
-Silakan dicoba.</h3>
+                    <div class="col-sm-12">
+                        <div class="action">
+                            <h3>Cara Kerja dan Petunjuk Penggunaan Sentiment Analysis:<br><br>
+•   Klik Button Crawling and Classify Tweets.<br>
+•   Sistem akan mengumpulkan tweets dan otomatis mengklasifisikasikan tweets kedalam sentimen.<br>
+•   Waktu Crawling and Classify Tweets kurang lebih 3 menit. Harap menunggu.<br>
+•   Hasil dari Crawling and Classify Tweets akan ditampilkan dalam bentuk tabel dan pie-chart.<br>
+•   Gunakan fungsi search pada tabel untuk mencari kata atau kalimat yang anda inginkan.<br>
+•   Klik Button Save the results untuk menyimpan hasil Crawling and Classify Tweets dalam bentuk PDF.<br></h3>
+                        <form action="/tweets/" method="post">{% csrf_token %}
+                            <div class="text-center">
+                                <button style="margin-left: 5px; margin-top: 25px;" class="btn btn-lg btn-primary">Crawling and Classify Tweets</button>
+                            </div>
+                        </form>
+                        </div>
+                        <div class="action">
+                            <div id="analysis-result">
+                                <!-- <div class="row text-center">
+                                <div class="col-md-4 col-md-offset-4"> -->
+                                <ul class="nav nav-pills">
+                                    <li class="active"><a data-toggle="pill" href="#home">Table Form</a></li>
+                                    <li><a data-toggle="pill" href="#menu1">Chart Form</a></li>
+                                </ul>
+                                <!-- <a class="btn btn-primary" data-toggle="pill" href="#home">Home</a>
+                                <a class="btn btn-primary" data-toggle="pill" href="#menu1">Chart Form</a>
+                                </div>
+                                </div> -->
+
+                                <div class="tab-content">
+                                    <div id="home" class="tab-pane fade in active"><br>
+                                        <table id="example" class="table table-bordered table-striped" cellspacing="0" width="100%">
+                                          <thead>
+                                            <tr>
+                                                <th class="text-center">Tweets</th>
+                                                <th class="text-center">Sentiment</th>
+                                            </tr>
+                                          </thead>
+                                            {% if obj %}
+                                            <script>
+                                                $(document).ready(function () {
+                                                    $('#analysis-result').show();
+                                                    $('#classify-btn').hide();
+                                                });
+                                            </script>
+                                            {% else %}
+                                            <script>
+                                                $(document).ready(function () {
+                                                    $('#analysis-result').hide();
+                                                });
+                                            </script>
+                                            {% endif %}
+                                            <tbody>
+                                            {% for item in obj %}
+                                                <tr>
+                                                    <td>{{ item.sentiment }}</td>
+                                                    <td>{{ item.classification }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <!-- <script>
+                                            $(document).ready(function() {
+                                                $('#example').DataTable( {
+                                                    dom: 'Bfrtip',
+                                                    buttons: [
+                                                        'print'
+                                                    ]
+                                                } );
+                                            } );
+                                        </script> -->
+                                        <script type="text/javascript">
+                                            $(document).ready(function() {
+                                                $('#example').DataTable( {
+                                                    dom: 'Bfrtip',
+                                                    buttons: [
+                                                        {
+                                                            extend: 'print',
+                                                            text:      '<i class="fa fa-file-pdf-o"></i>Save the results',
+                                                            message: 'Hasil Klasifikasi Tweets'
+                                                        }
+                                                    ]
+                                                } );
+                                            } );
+                                        </script>
+                                        <!-- <script>
+                                            $(document).ready(function(){
+                                                $('#example').DataTable();
+                                            });
+                                        </script> -->
+                                    </div>
+                                    <div id="menu1" class="tab-pane fade">
+                                        <!-- <h3>Pie Chart Sentimen Analisis</h3> -->
+                                        
+                                            <div class="inner" id="piechart"></div>
+                                     
+                                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,66 +186,10 @@ Silakan dicoba.</h3>
         </div>
     </section>
 
-   <!-- <section id="company-description">
-        {#    <div class="clearfix"></div>#}
-        <form action="/tweets/" method="post">{% csrf_token %}
-            <p>
-{#                <button style="font-size: 12pt; margin-top: 20px; width: 150px; height: 30px; cursor: pointer;" value="Klasifikasi Tweet">Klasifikasi Tweets</button>#}
-{#                <button class="btn-classify">Crawling and Classify Tweet</button>#}
-                <button style="margin-left: 20px; margin-top: 50px;" class="btn btn-primary">Crawling and Classify Tweet</button>
-
-            </p>
-        </form>
-    </section> -->
-
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                   
-                        <div class="block">
-                             {#    <div class="clearfix"></div>#}
-        <form action="/tweets/" method="post">{% csrf_token %}
-        
-{#                <button style="font-size: 50pt; margin-top: 20px; width: 150px; height: 30px; cursor: pointer;" value="Klasifikasi Tweet">Klasifikasi Tweets</button>#}
-{#                <button class="btn-classify">Crawling and Classify Tweet</button>#}
-                <button style="margin-left: 5px; margin-top: 25px;" class="btn btn-primary">Crawling and Classify Tweet</button>
-
-            </p>
-        </form>
-        </div>
-        </div>
-      
-        </div>
-        </div>
-   
-
-    <section id="company-description">
-        {#        <div class="col-md-offset-4 col-md-4">#}
-
-        <div class="col-md-8">
-            <input style="margin-left: 5px; height: 35px; width: 200px; padding-left: 20px;" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for tweets..">
-            {#        <button onclick="myFunction()" id="searchbutton;">Search</button>#}
-            <!--<div id="myDIV" style="display:none">-->
-            <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-    
-                <tr>
-                    <th style="width: 80%; text-align: center; background-color: #00BFFF; color: white; border: 1px solid #ddd; padding: 8px;" >Tweets</th>
-                    <th style="width: 20%; text-align: center; background-color: #00BFFF; color: white; border: 1px solid #ddd; padding: 8px;">Hasil Klasifikasi</th>
-                </tr>
-                {% for item in obj %}
-                    <tr>
-                        <td style="width: 80%; border: 1px solid #ddd; padding: 8px;">{{ item.sentiment }}</td>
-                        <td style="width: 20%; border: 1px solid #ddd; text-align: center; padding: 8px;">{{ item.classification }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
-    <div id="piechart" class="col-md-4" style="margin-top: 20px;"></div>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    </section>
-    <!--<div class="clearfix"></div>-->
     <script>
+        function simpanHasil() {
+            window.print();
+        }
         function ShowTableChart(){
             var x = document.getElementById('myDIV');
             if (x.style.display === 'none') {
@@ -208,7 +249,7 @@ Silakan dicoba.</h3>
                 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
                 chart.draw(data, options);
             }
-            //document.write(neg_count);
+            document.write(neg_count);
         }
     </script>
 
@@ -252,7 +293,7 @@ Silakan dicoba.</h3>
             ]);
 
             // Optional; add a title and set the width and height of the chart
-            var options = {'title':'Pie Chart Hasil Klasifikasi Tweets', 'width':450, 'height':300};
+            var options = {'title':'Pie Chart Hasil Klasifikasi Tweets', 'width':900, 'height':600};
 
             // Display the chart inside the <div> element with id="piechart"
             var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -271,8 +312,5 @@ Silakan dicoba.</h3>
     </div>-->
     <!--<div class="clearfix"></div>-->
     {% endblock %}
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
 </body>
 </html>
